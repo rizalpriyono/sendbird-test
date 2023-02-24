@@ -6,9 +6,8 @@ import MessageComponent from './Message';
 
 import React, { useState } from 'react';
 import { useSendbirdStateContext, sendbirdSelectors } from '@sendbird/uikit-react';
-import { OpenChannel } from '@sendbird/chat/openChannel';
 import { UserMessageCreateParams } from '@sendbird/chat/message';
-import { GroupChannel } from '@sendbird/chat/groupChannel';
+import { CoreMessageType } from 'SendbirdUIKitGlobal';
 
 interface IChannelChatProps {
   channelUrl: string;
@@ -24,7 +23,7 @@ const ChannelChat = ({ channelUrl }: IChannelChatProps) => {
 
 const ChannelComponent = () => {
   const [text, setText] = useState<string>('');
-  const { allMessages, loading, channelUrl } = useChannelContext();
+  const { allMessages, channelUrl } = useChannelContext();
   const context = useSendbirdStateContext();
 
   const sendMessage = sendbirdSelectors.getSendUserMessage(context);
@@ -33,8 +32,9 @@ const ChannelComponent = () => {
   const handleSendMessage = async () => {
     const message: UserMessageCreateParams = {
       message: text,
+      // customType: 'NEGO_REQUEST_BUYER',
     };
-    const channel: GroupChannel = await getGroupChannel(channelUrl);
+    const channel = await getGroupChannel(channelUrl);
 
     sendMessage(channel, message);
   };
@@ -44,8 +44,7 @@ const ChannelComponent = () => {
       <section className="bg-white w-full h-16 p-3">header</section>
 
       <section className="p-2 flex-grow bg-gray-100">
-        {loading && <h1>No Message</h1>}
-        {allMessages.map((message) => (
+        {allMessages.map((message: CoreMessageType) => (
           <MessageComponent message={message} />
         ))}
       </section>

@@ -3,7 +3,6 @@ import {
   ChannelListProvider,
   useChannelListContext,
 } from '@sendbird/uikit-react/ChannelList/context';
-import { sendbirdSelectors, useSendbirdStateContext } from '@sendbird/uikit-react';
 
 interface IChannelListProps {
   onSelectChannel: (value: string) => void;
