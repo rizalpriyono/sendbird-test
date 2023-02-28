@@ -8,9 +8,5 @@ const USER_ID = 'test456';
 const TOKEN = 'c5c15134c6b070a05f631b4b026531266404bf75';
 
 export default function App({ Component, pageProps }: AppProps) {
-  return (
-    <SendBirdProvider appId={APP_ID} userId={USER_ID} accessToken={TOKEN}>
-      <Component {...pageProps} />
-    </SendBirdProvider>
-  );
+  return <Component {...pageProps} />;
 }

@@ -1,10 +1,11 @@
 import { UserMessage } from '@sendbird/chat/message';
+import { FC } from 'react';
 
 interface IMessageProps {
   message: UserMessage;
 }
 
-const MessageComponent = ({ message }: IMessageProps) => {
+const MessageComponent: FC<IMessageProps> = ({ message }) => {
   const renderMessageType = (type: string | undefined) => {
     if (type == 'NEGO_REQUEST') {
       return (

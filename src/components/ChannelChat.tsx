@@ -4,10 +4,12 @@ import {
 } from '@sendbird/uikit-react/Channel/context';
 import MessageComponent from './Message';
 
-import React, { useState } from 'react';
+import { FormEvent, useEffect, useState } from 'react';
 import { useSendbirdStateContext, sendbirdSelectors } from '@sendbird/uikit-react';
 import { UserMessageCreateParams } from '@sendbird/chat/message';
 import { CoreMessageType } from 'SendbirdUIKitGlobal';
+import TypingIndicator from '@sendbird/uikit-react/Channel/components/TypingIndicator';
+import MessageInput from '@sendbird/uikit-react/Channel/components/MessageInput';
 
 interface IChannelChatProps {
   channelUrl: string;
@@ -23,7 +25,7 @@ const ChannelChat = ({ channelUrl }: IChannelChatProps) => {
 
 const ChannelComponent = () => {
   const [text, setText] = useState<string>('');
-  const { allMessages, channelUrl } = useChannelContext();
+  const { allMessages, channelUrl, currentGroupChannel } = useChannelContext();
   const context = useSendbirdStateContext();
 
   const sendMessage = sendbirdSelectors.getSendUserMessage(context);
@@ -35,18 +37,27 @@ const ChannelComponent = () => {
       // customType: 'NEGO_REQUEST_BUYER',
     };
     const channel = await getGroupChannel(channelUrl);
-
     sendMessage(channel, message);
+
+    // currentGroupChannel?.sendUserMessage(message)
+  };
+
+  const handleInputMessage = (event: FormEvent<HTMLInputElement>) => {
+    currentGroupChannel?.startTyping();
+    setText(event.currentTarget.value);
   };
 
   console.log(allMessages);
   return (
     <div className="flex flex-col h-full">
-      <section className="bg-white w-full h-16 p-3">header</section>
+      <section className="bg-white w-full h-16 p-3">
+        header
+        <TypingIndicator />
+      </section>
 
       <section className="p-2 flex-grow bg-gray-100">
-        {allMessages.map((message: CoreMessageType) => (
-          <MessageComponent message={message} />
+        {allMessages.map((message: CoreMessageType, idx) => (
+          <MessageComponent message={message} key={idx} />
         ))}
       </section>
 
@@ -55,7 +66,7 @@ const ChannelComponent = () => {
           className="h-full border outline-none rounded-md w-[300px] p-3 text-sm"
           placeholder="write a message"
           value={text}
-          onChange={(event) => setText(event.currentTarget.value)}
+          onChange={handleInputMessage}
         />
         <button
           className="ml-3 bg-slate-700 rounded-md text-white h-full px-4"
