@@ -5,11 +5,11 @@ import { SendBirdProvider } from '@sendbird/uikit-react';
 
 const APP_ID = 'F9B01914-4A11-4F9B-9462-9212C261957B';
 const USER_ID = 'test456';
-const TOKEN = '192d932ceb4802f746401d899923fc4b4893fd30';
+const TOKEN = 'c5c15134c6b070a05f631b4b026531266404bf75';
 
 export default function App({ Component, pageProps }: AppProps) {
   return (
-    <SendBirdProvider appId={APP_ID} userId={USER_ID}>
+    <SendBirdProvider appId={APP_ID} userId={USER_ID} accessToken={TOKEN}>
       <Component {...pageProps} />
     </SendBirdProvider>
   );

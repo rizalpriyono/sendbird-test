@@ -39,6 +39,7 @@ const ChannelComponent = () => {
     sendMessage(channel, message);
   };
 
+  console.log(allMessages);
   return (
     <div className="flex flex-col h-full">
       <section className="bg-white w-full h-16 p-3">header</section>
