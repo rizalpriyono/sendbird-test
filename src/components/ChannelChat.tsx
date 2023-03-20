@@ -9,7 +9,7 @@ import { useSendbirdStateContext, sendbirdSelectors } from '@sendbird/uikit-reac
 import { UserMessageCreateParams } from '@sendbird/chat/message';
 import { CoreMessageType } from 'SendbirdUIKitGlobal';
 import TypingIndicator from '@sendbird/uikit-react/Channel/components/TypingIndicator';
-import MessageInput from '@sendbird/uikit-react/Channel/components/MessageInput';
+import Channel from '@sendbird/uikit-react/Channel';
 
 interface IChannelChatProps {
   channelUrl: string;
@@ -47,7 +47,6 @@ const ChannelComponent = () => {
     setText(event.currentTarget.value);
   };
 
-  console.log(allMessages);
   return (
     <div className="flex flex-col h-full">
       <section className="bg-white w-full h-16 p-3">
